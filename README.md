@@ -35,7 +35,7 @@ MyTask merupakan aplikasi mobile pencatatan / manajemen tugas sederhana yang dib
 ## Deklarasi Penggunaan AI
 - Apakah menggunakan AI? **Ya**
 - Tool AI yang digunakan: **ChatGPT**
-- Estimasi persentase kontribusi AI: **20%**
+- Estimasi persentase kontribusi AI: **25%**
 - Bagian kode/fitur yang dibantu AI: 
   - Membuat Local Storage
     
@@ -44,7 +44,7 @@ MyTask merupakan aplikasi mobile pencatatan / manajemen tugas sederhana yang dib
     File keys.dart
     ```
     class Keys {
-        static const String tasks = 'taks';
+        static const String tasks = 'tasks';
     }
     ```
 
@@ -53,51 +53,60 @@ MyTask merupakan aplikasi mobile pencatatan / manajemen tugas sederhana yang dib
     import 'package:get_storage/get_storage.dart';
 
     class GSService {
-    static final box = GetStorage();
+        static final box = GetStorage();
 
-    static Future<void> init() async {
-        await GetStorage.init();
-    }
+        static Future<void> init() async {
+            await GetStorage.init();
+        }
 
-    static dynamic get(String key) {
-        return box.read(key);
-    }
+        static dynamic get(String key) {
+            return box.read(key);
+        }
 
-    static Future<void> save(String key, dynamic value) async {
-        await box.write(key, value);
-    }
+        static Future<void> save(String key, dynamic value) async {
+            await box.write(key, value);
+        }
 
-    static Future<void> remove(String key) async {
-        await box.remove(key);
-    }
+        static Future<void> remove(String key) async {
+            await box.remove(key);
+        }
     }
     ```
 
   - Memperbaiki Syntax Error
     ```
-    class HomePage extends StatefulWidget {
-    const HomePage({super.key});
-
-    @override
-    State<HomePage> createState() => _HomePageState();
-    }
 
     class _HomePageState extends State<HomePage> {
-    @override
-    void initState() {
-        super.initState();
+        @override
+        void initState() {
+            super.initState();
 
-        tasks = List<Map<String, dynamic>>.from(
-        GSService.get('tasks') ?? [],
-        );
-    }
+            try {
+                final savedTasks = GSService.get('tasks');
 
-    Future<void> deleteTask(int index) async {
-        setState(() {
-        tasks.removeAt(index);
-        });
+                tasks = savedTasks == null
+                ? []
+                : List<Map<String, dynamic>>.from(
+                    savedTasks.map((task) => Map<String, dynamic>.from(task)),
+                );
+            } catch (e) {
+                tasks = [];
+            }
+        }
+        Future<void> deleteTask(int index) async {
+            final title = tasks[index]['title'];
+            setState(() {
+                tasks.removeAt(index);
+            });
 
-        await GSService.save('tasks', tasks);
+            await GSService.save('tasks', tasks);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: Text('Tugas $title berhasil dihapus'),
+                ),
+            );
+        }
     }
     ```
 
