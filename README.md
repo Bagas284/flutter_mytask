@@ -96,6 +96,6 @@ MyTask merupakan aplikasi mobile pencatatan / manajemen tugas sederhana yang dib
     }
     ```
 
-Pernyataan:  
+- Pernyataan:  
 "Saya menyatakan bahwa saya memahami alur dan fungsi dari seluruh kode yang ada dalam 
 repositori ini"
