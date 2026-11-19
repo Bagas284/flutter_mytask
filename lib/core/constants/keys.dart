@@ -1,3 +1,3 @@
 class Keys {
-  static const String tasks = 'taks';
+  static const String tasks = 'tasks';
 }

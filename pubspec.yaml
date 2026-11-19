@@ -12,6 +12,9 @@ dependencies:
   material_ui: ^1.1.0
   get_storage: ^2.1.1
 
+dependency_overrides:
+  path_provider_android: 2.2.23
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

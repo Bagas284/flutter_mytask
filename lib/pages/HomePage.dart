@@ -3,13 +3,6 @@ import '../data/TaskData.dart';
 import '../pages/AddPage.dart';
 import '../core/services/get_storage.dart';
 
-void main() {
-  runApp(const MaterialApp(
-      home: HomePage(),
-    ),
-  );
-}
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -22,9 +15,17 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    tasks = List<Map<String, dynamic>>.from(
-      GSService.get('tasks') ?? [],
-    );
+    try {
+      final savedTasks = GSService.get('tasks');
+
+      tasks = savedTasks == null
+          ? []
+          : List<Map<String, dynamic>>.from(
+              savedTasks.map((task) => Map<String, dynamic>.from(task)),
+            );
+    } catch (e) {
+      tasks = [];
+    }
   }
 
   Future<void> deleteTask(int index) async {
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               tasks.add({'title': newTask, 'isCompleted': false});
             });
 
-            GSService.save('tasks', tasks);
+            await GSService.save('tasks', tasks);
           }
         },
         backgroundColor: Colors.red,

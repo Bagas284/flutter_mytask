@@ -2,8 +2,11 @@ import 'package:material_ui/material_ui.dart';
 import 'pages/HomePage.dart';
 import 'core/services/get_storage.dart';
 
-void main() async{
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await GSService.init();
+
   runApp(const MainApp());
 }
 
@@ -13,6 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'My Task',
       home: HomePage(),
     );
