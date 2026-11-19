@@ -42,13 +42,15 @@ MyTask merupakan aplikasi mobile pencatatan / manajemen tugas sederhana yang dib
     Disini melihat tutorial video di youtube dan menggunakan AI dikarenakan kebingungan cara implementasi 
 
     File keys.dart
-    ```class Keys {
+    ```
+    class Keys {
         static const String tasks = 'taks';
     }
     ```
 
     File get_storage.dart
-    ```import 'package:get_storage/get_storage.dart';
+    ```
+    import 'package:get_storage/get_storage.dart';
 
     class GSService {
     static final box = GetStorage();
