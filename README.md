@@ -18,7 +18,7 @@ MyTask merupakan aplikasi mobile pencatatan / manajemen tugas sederhana yang dib
 ![Home Screen](screenshoots/homepage1data.png)
 
 ## Langkah Singkat Menjalankan Aplikasi
-1. Clone repositori ini:
+1. Clone repositori ini: https://github.com/Bagas284/flutter_mytask.git
 
 2. Buka folder project menggunakan Visual Studio Code.
 
