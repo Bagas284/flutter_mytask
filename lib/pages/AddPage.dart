@@ -48,7 +48,12 @@ class _AddFormState extends State<AddForm> {
 
             const SizedBox(height: 20),
 
-            const Text('Tugas', style: TextStyle(fontSize: 20)),
+            Row(
+              children: [
+                const Text('Tugas', style: TextStyle(fontSize: 20)),
+                const Text(' *', style: TextStyle(color: Colors.red, fontSize: 20)),
+              ],
+            ),
 
             TextFormField(
               controller: _taskController,
@@ -64,7 +69,7 @@ class _AddFormState extends State<AddForm> {
               },
             ),
 
-            const SizedBox(height: 15),
+            const SizedBox(height: 30),
 
             Align(
               alignment: Alignment.centerRight,
@@ -85,8 +90,7 @@ class _AddFormState extends State<AddForm> {
                     ),
                   ),
 
-                  icon: const Icon(Icons.save, color: Colors.white),
-                  label: const Text('Save Task', style: TextStyle(color: Colors.white)),
+                  label: const Text('Save', style: TextStyle(color: Colors.white)),
                 ),
             )
           ],

@@ -29,18 +29,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> deleteTask(int index) async {
+    final title = tasks[index]['title'];
     setState(() {
       tasks.removeAt(index);
     });
 
     await GSService.save('tasks', tasks);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Tugas $title berhasil dihapus'),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed:() async {
+        onPressed: () async {
           final newTask = await Navigator.push<String>(
             context,
             MaterialPageRoute(builder: (context) => AddPage()),
@@ -48,10 +55,20 @@ class _HomePageState extends State<HomePage> {
 
           if (newTask != null && newTask.isNotEmpty) {
             setState(() {
-              tasks.add({'title': newTask, 'isCompleted': false});
+              tasks.add({
+                'title': newTask,
+                'isCompleted': false,
+              });
             });
 
             await GSService.save('tasks', tasks);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Tugas $newTask berhasil ditambahkan'),
+                duration: const Duration(seconds: 2),
+              ),
+            );
           }
         },
         backgroundColor: Colors.red,
@@ -94,6 +111,11 @@ class _HomePageState extends State<HomePage> {
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 8,
+                        ),
+
+                        leading: const Icon(
+                          Icons.assignment,
+                          color: Colors.red,
                         ),
 
                         title: Text(
